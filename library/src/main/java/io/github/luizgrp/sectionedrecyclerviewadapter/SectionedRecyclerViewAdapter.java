@@ -57,7 +57,7 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                         viewHolder = getFooterViewHolder(parent, section);
                         break;
                     case VIEW_TYPE_ITEM_LOADED:
-                        viewHolder = getItemViewHolder(parent, section);
+                        viewHolder = getItemViewHolder(parent, section, viewType);
                         break;
                     case VIEW_TYPE_LOADING:
                         viewHolder = getLoadingViewHolder(parent, section);
@@ -82,10 +82,10 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         return LayoutInflater.from(parent.getContext()).inflate(layoutResourceId, parent, false);
     }
 
-    private RecyclerView.ViewHolder getItemViewHolder(ViewGroup parent, Section section) {
+    private RecyclerView.ViewHolder getItemViewHolder(ViewGroup parent, Section section, int viewType) {
         View view;
         if (section.isItemViewWillBeProvided()) {
-            view = section.getItemView(parent);
+            view = section.getItemView(parent, viewType);
             if (view == null) {
                 throw new NullPointerException("Section.getItemView() returned null");
             }
@@ -96,7 +96,7 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
             }
             view = inflate(resId, parent);
         }
-        return section.getItemViewHolder(view);
+        return section.getItemViewHolder(view, viewType);
     }
 
     private RecyclerView.ViewHolder getHeaderViewHolder(ViewGroup parent, Section section) {

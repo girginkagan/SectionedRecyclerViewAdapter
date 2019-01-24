@@ -92,7 +92,7 @@ public class Example4Fragment extends Fragment {
         }
 
         @Override
-        public RecyclerView.ViewHolder getItemViewHolder(View view) {
+        public RecyclerView.ViewHolder getItemViewHolder(View view, int viewType) {
             return new ItemViewHolder(view);
         }
 

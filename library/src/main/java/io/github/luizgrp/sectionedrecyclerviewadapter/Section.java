@@ -161,10 +161,10 @@ public abstract class Section {
     }
 
     /**
-     * Return whether the item view is provided through {@link #getItemView(ViewGroup)}.
+     * Return whether the item view is provided through {@link #getItemView(ViewGroup, int)}.
      * If false, the item view is inflated using the resource from {@link #getItemResourceId()}.
      *
-     * @return whether the item view is provided through {@link #getItemView(ViewGroup)}.
+     * @return whether the item view is provided through {@link #getItemView(ViewGroup, int)}.
      */
     public final boolean isItemViewWillBeProvided() {
         return itemViewWillBeProvided;
@@ -348,7 +348,7 @@ public abstract class Section {
      * @param parent The parent view. Note that there is no need to attach the new view.
      * @return View for an Item of this Section.
      */
-    public View getItemView(ViewGroup parent) {
+    public View getItemView(ViewGroup parent, int viewType) {
         throw new UnsupportedOperationException(
                 "You need to implement getItemView() if you set itemViewWillBeProvided");
     }
@@ -359,7 +359,7 @@ public abstract class Section {
      * @param view View created by getItemView or inflated resource returned by getItemResourceId
      * @return ViewHolder for the Item of this Section
      */
-    public abstract RecyclerView.ViewHolder getItemViewHolder(View view);
+    public abstract RecyclerView.ViewHolder getItemViewHolder(View view, int viewType);
 
     /**
      * Bind the data to the ViewHolder for an Item of this Section.

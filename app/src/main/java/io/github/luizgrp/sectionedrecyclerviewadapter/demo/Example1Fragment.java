@@ -91,7 +91,7 @@ public class Example1Fragment extends Fragment {
         }
 
         @Override
-        public RecyclerView.ViewHolder getItemViewHolder(View view) {
+        public RecyclerView.ViewHolder getItemViewHolder(View view, int viewType) {
             return new ItemViewHolder(view);
         }
 
