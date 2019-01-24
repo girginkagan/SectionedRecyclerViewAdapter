@@ -107,7 +107,7 @@ public class StatelessSectionTest {
             }
 
             @Override
-            public RecyclerView.ViewHolder getItemViewHolder(View view) {
+            public RecyclerView.ViewHolder getItemViewHolder(View view, int viewType) {
                 return null;
             }
 

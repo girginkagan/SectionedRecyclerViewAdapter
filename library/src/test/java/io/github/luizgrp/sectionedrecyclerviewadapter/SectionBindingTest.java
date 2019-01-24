@@ -57,10 +57,10 @@ public class SectionBindingTest {
         sectionAdapter.onCreateViewHolder(null, 6 + SectionedRecyclerViewAdapter.VIEW_TYPE_ITEM_LOADED);
 
         // Then
-        verify(dummySection, never()).getItemView(any(ViewGroup.class));
-        verify(dummySection, never()).getItemViewHolder(any(View.class));
-        verify(section, never()).getItemView(any(ViewGroup.class));
-        verify(section, times(1)).getItemViewHolder(argThat(hasTag(-1)));
+        verify(dummySection, never()).getItemView(any(ViewGroup.class), -1);
+        verify(dummySection, never()).getItemViewHolder(any(View.class), -1);
+        verify(section, never()).getItemView(any(ViewGroup.class), -1);
+        verify(section, times(1)).getItemViewHolder(argThat(hasTag(-1)), -1);
     }
 
     @Test
@@ -68,16 +68,16 @@ public class SectionBindingTest {
         // Given
         Section providingSection = spy(new SectionImpl(SectionParameters.builder().itemViewWillBeProvided()));
         sectionAdapter.addSection(providingSection); // Third section, view types 12-17
-        doReturn(dummyViewWithTag(42)).when(providingSection).getItemView(null);
+        doReturn(dummyViewWithTag(42)).when(providingSection).getItemView(null, -1);
 
         // When
         sectionAdapter.onCreateViewHolder(null, 12 + SectionedRecyclerViewAdapter.VIEW_TYPE_ITEM_LOADED);
 
         // Then
-        verify(section, never()).getItemView(any(ViewGroup.class));
-        verify(section, never()).getItemViewHolder(any(View.class));
-        verify(providingSection, times(1)).getItemView(null);
-        verify(providingSection, times(1)).getItemViewHolder(argThat(hasTag(42)));
+        verify(section, never()).getItemView(any(ViewGroup.class), -1);
+        verify(section, never()).getItemViewHolder(any(View.class), -1);
+        verify(providingSection, times(1)).getItemView(null, -1);
+        verify(providingSection, times(1)).getItemViewHolder(argThat(hasTag(42)), -1);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class SectionBindingTest {
         // Given
         Section providingSection = spy(new SectionImpl(SectionParameters.builder().itemViewWillBeProvided()));
         sectionAdapter.addSection(providingSection); // Third section, view types 12-17
-        doReturn(null).when(providingSection).getItemView(null);
+        doReturn(null).when(providingSection).getItemView(null, -1);
 
         // Expect exception
         expectedException.expect(NullPointerException.class);
@@ -446,7 +446,7 @@ public class SectionBindingTest {
         }
 
         @Override
-        public RecyclerView.ViewHolder getItemViewHolder(View view) {
+        public RecyclerView.ViewHolder getItemViewHolder(View view, int viewType) {
             return null;
         }
 
