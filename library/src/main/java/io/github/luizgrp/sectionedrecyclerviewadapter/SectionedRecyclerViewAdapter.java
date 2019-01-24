@@ -35,6 +35,7 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private static final int VIEW_TYPE_QTY = 6;
 
     public int position = 0;
+    Section section;
 
     public SectionedRecyclerViewAdapter() {
         sections = new LinkedHashMap<>();
@@ -49,7 +50,13 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         for (Map.Entry<String, Integer> entry : sectionViewTypeNumbers.entrySet()) {
             if (viewType >= entry.getValue() && viewType < entry.getValue() + VIEW_TYPE_QTY) {
 
-                Section section = sections.get(entry.getKey());
+                Section tempSection = sections.get(entry.getKey());
+
+                if(tempSection != section){
+                    position = 0;
+                }
+                section = tempSection;
+
                 int sectionViewType = viewType - entry.getValue();
 
                 switch (sectionViewType) {
