@@ -61,6 +61,7 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                         break;
                     case VIEW_TYPE_ITEM_LOADED:
                         viewHolder = getItemViewHolder(parent, section, position);
+                        position++;
                         break;
                     case VIEW_TYPE_LOADING:
                         viewHolder = getLoadingViewHolder(parent, section);
@@ -76,7 +77,6 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 }
             }
         }
-        position++;
         return viewHolder;
     }
 
