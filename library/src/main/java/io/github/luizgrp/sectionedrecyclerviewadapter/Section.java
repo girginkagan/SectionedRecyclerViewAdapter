@@ -180,11 +180,11 @@ public abstract class Section {
     }
 
     /**
-     * Return whether the header view is provided through {@link #getHeaderView(ViewGroup)}.
+     * Return whether the header view is provided through {@link #getHeaderView(ViewGroup, int)}.
      * If false, the header view is inflated using the resource from
      * {@link #getHeaderResourceId()}.
      *
-     * @return whether the header view is provided through {@link #getHeaderView(ViewGroup)}.
+     * @return whether the header view is provided through {@link #getHeaderView(ViewGroup, int)}.
      */
     public final boolean isHeaderViewWillBeProvided() {
         return headerViewWillBeProvided;
@@ -376,7 +376,7 @@ public abstract class Section {
      * @param parent The parent view. Note that there is no need to attach the new view.
      * @return View for the Header of this Section.
      */
-    public View getHeaderView(@SuppressWarnings("unused") ViewGroup parent) {
+    public View getHeaderView(@SuppressWarnings("unused") ViewGroup parent, int viewType) {
         throw new UnsupportedOperationException(
                 "You need to implement getHeaderView() if you set headerViewWillBeProvided");
     }

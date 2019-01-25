@@ -105,9 +105,8 @@ public class SectionBindingTest {
         sectionAdapter.onCreateViewHolder(null, 12 + SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER);
 
         // Then
-        verify(section, never()).getHeaderView(any(ViewGroup.class));
-        verify(section, never()).getHeaderViewHolder(any(View.class));
-        verify(headedSection, never()).getHeaderView(any(ViewGroup.class));
+        verify(section, never()).getHeaderView(any(ViewGroup.class), -1);
+        verify(headedSection, never()).getHeaderView(any(ViewGroup.class), -1);
         verify(headedSection, times(1)).getHeaderViewHolder(argThat(hasTag(-2)));
     }
 
@@ -116,13 +115,13 @@ public class SectionBindingTest {
         // Given
         Section providingSection = spy(new SectionImpl(SectionParameters.builder().itemResourceId(-1).headerViewWillBeProvided()));
         sectionAdapter.addSection(providingSection); // Third section, view types 12-17
-        doReturn(dummyViewWithTag(42)).when(providingSection).getHeaderView(null);
+        doReturn(dummyViewWithTag(42)).when(providingSection).getHeaderView(null, -1);
 
         // When
         sectionAdapter.onCreateViewHolder(null, 12 + SectionedRecyclerViewAdapter.VIEW_TYPE_HEADER);
 
         // Then
-        verify(providingSection, times(1)).getHeaderView(null);
+        verify(providingSection, times(1)).getHeaderView(null, -1);
         verify(providingSection, times(1)).getHeaderViewHolder(argThat(hasTag(42)));
     }
 
@@ -131,7 +130,7 @@ public class SectionBindingTest {
         // Given
         Section providingSection = spy(new SectionImpl(SectionParameters.builder().itemResourceId(-1).headerViewWillBeProvided()));
         sectionAdapter.addSection(providingSection); // Third section, view types 12-17
-        doReturn(null).when(providingSection).getHeaderView(null);
+        doReturn(null).when(providingSection).getHeaderView(null, -1);
 
         // Expect exception
         expectedException.expect(NullPointerException.class);

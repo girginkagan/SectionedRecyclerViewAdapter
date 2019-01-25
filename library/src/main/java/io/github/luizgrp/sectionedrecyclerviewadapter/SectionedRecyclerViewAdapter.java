@@ -34,13 +34,15 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     private int viewTypeCount = 0;
     private static final int VIEW_TYPE_QTY = 6;
 
-    public int position = 0;
+    public int itemPosition = 0;
+    public int headerPostion = 0;
     Section section;
 
     public SectionedRecyclerViewAdapter() {
         sections = new LinkedHashMap<>();
         sectionViewTypeNumbers = new LinkedHashMap<>();
-        position = 0;
+        itemPosition = 0;
+        headerPostion = 0;
     }
 
     @Override
@@ -53,7 +55,8 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
                 Section tempSection = sections.get(entry.getKey());
 
                 if(tempSection != section){
-                    position = 0;
+                    itemPosition = 0;
+                    headerPostion = 0;
                 }
                 section = tempSection;
 
@@ -61,14 +64,15 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
                 switch (sectionViewType) {
                     case VIEW_TYPE_HEADER:
-                        viewHolder = getHeaderViewHolder(parent, section);
+                        viewHolder = getHeaderViewHolder(parent, section, headerPostion);
+                        headerPostion++;
                         break;
                     case VIEW_TYPE_FOOTER:
                         viewHolder = getFooterViewHolder(parent, section);
                         break;
                     case VIEW_TYPE_ITEM_LOADED:
-                        viewHolder = getItemViewHolder(parent, section, position);
-                        position++;
+                        viewHolder = getItemViewHolder(parent, section, itemPosition);
+                        itemPosition++;
                         break;
                     case VIEW_TYPE_LOADING:
                         viewHolder = getLoadingViewHolder(parent, section);
@@ -109,10 +113,10 @@ public class SectionedRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         return section.getItemViewHolder(view, viewType);
     }
 
-    private RecyclerView.ViewHolder getHeaderViewHolder(ViewGroup parent, Section section) {
+    private RecyclerView.ViewHolder getHeaderViewHolder(ViewGroup parent, Section section, int viewType) {
         View view;
         if (section.isHeaderViewWillBeProvided()) {
-            view = section.getHeaderView(parent);
+            view = section.getHeaderView(parent, viewType);
             if (view == null) {
                 throw new NullPointerException("Section.getHeaderView() returned null");
             }
